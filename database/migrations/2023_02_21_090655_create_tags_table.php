@@ -19,6 +19,9 @@ return new class extends Migration
             $table->unsignedBigInteger('tag_type_id');
             $table->foreign('tag_type_id')->references('id')->on('tag_types');
 
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('tags');
+
             $table->text('title');
             $table->text('content');
             
