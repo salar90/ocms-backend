@@ -30,5 +30,10 @@ class Entry extends Model
         'author_id'
     ];
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
 
 }

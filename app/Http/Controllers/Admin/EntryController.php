@@ -28,6 +28,7 @@ class EntryController extends Controller
             'excerpt' => '',
             'content' => 'required',
             'author_id' => 'in:users,id',
+            'tags' => 'array,rule:in(tags,id)',
         ]);
         
         $data = request()->only([
@@ -39,6 +40,11 @@ class EntryController extends Controller
         ]);
         $entry = new Entry($data);
         $entry->save();
+
+        if(request()->has('tags')){
+            $entry->tags()->attach(request()->input('tags'));
+        }
+        
         
         return $this->jsonResponse($entry);
 
@@ -52,6 +58,7 @@ class EntryController extends Controller
             'excerpt' => '',
             'content' => 'required',
             'author_id' => 'in:users,id',
+            'tags' => 'array,rule:in(tags,id)'
         ]);
         
         $entry->update(request()->only([
@@ -61,6 +68,10 @@ class EntryController extends Controller
             'content',
             'author_id'
         ]));
+
+        if(request()->has('tags')){
+            $entry->tags()->attach(request()->input('tags'));
+        }
 
         return $this->jsonResponse($entry);
     }
