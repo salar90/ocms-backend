@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\EntryController;
+use App\Http\Controllers\Admin\TagTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,5 @@ Route::middleware('auth:sanctum')->group([], function(){
 
 // Route::get('entries', [EntryController::class, 'index'])->name('entries.index');
 Route::apiResource('entries', EntryController::class);
+Route::apiResource('tag-types', TagTypeController::class);
+Route::apiResource('tags', TagController::class);
