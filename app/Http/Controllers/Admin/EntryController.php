@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Entry;
 use App\Traits\HasJsonResponse;
 use Illuminate\Http\Request;
-use PDO;
+use Illuminate\Validation\Rule;
 
 class EntryController extends Controller
 {
@@ -24,7 +24,7 @@ class EntryController extends Controller
     {
         request()->validate([
             'title' => 'required',
-            'status' => 'required',
+            'status' => ['required', Rule::in(Entry::statusValues())],
             'excerpt' => '',
             'content' => 'required',
             'author_id' => 'in:users,id',
@@ -48,7 +48,7 @@ class EntryController extends Controller
     {
         request()->validate([
             'title' => 'required',
-            'status' => 'required',
+            'status' => ['required', Rule::in(Entry::statusValues())],
             'excerpt' => '',
             'content' => 'required',
             'author_id' => 'in:users,id',
