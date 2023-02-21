@@ -3,23 +3,20 @@
 namespace App\Models;
 
 use App\Enums\Status;
+use App\Traits\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Entry extends Model
 {
     use HasFactory;
+    use HasStatus;
 
     const statusList = [
         Status::Draft,
         Status::Published,
         Status::Deleted,
     ];
-
-    public static function statusValues()
-    {
-        return array_map(fn ($status) => $status->value, self::statusList); 
-    }
 
     protected $guarded = [];
     protected $fillable = [
