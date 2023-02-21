@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('icon')->nullable();
             $table->string('status')->default('active');
+            $table->boolean('parents')->default('0');
             $table->timestamps();
         });
     }
