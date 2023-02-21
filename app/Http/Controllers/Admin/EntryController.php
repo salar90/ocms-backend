@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Entry;
 use App\Traits\HasJsonResponse;
 use Illuminate\Http\Request;
+use PDO;
 
 class EntryController extends Controller
 {
@@ -15,13 +16,20 @@ class EntryController extends Controller
     public function index()
     {
         $entries = Entry::query()->paginate();
-        if(request()->wantsJson()){
-            return $entries;
-        }
+        return $this->jsonResponse($entries);
+        return $entries;
     }
 
     public function store()
     {
+        request()->validate([
+            'title' => 'required',
+            'status' => 'required',
+            'excerpt' => '',
+            'content' => 'required',
+            'author_id' => 'in:users,id',
+        ]);
+        
         $data = request()->only([
             'title',
             'status',
@@ -34,6 +42,34 @@ class EntryController extends Controller
         
         return $this->jsonResponse($entry);
 
+    }
+
+    public function update(Entry $entry)
+    {
+        request()->validate([
+            'title' => 'required',
+            'status' => 'required',
+            'excerpt' => '',
+            'content' => 'required',
+            'author_id' => 'in:users,id',
+        ]);
+        
+        $entry->update(request()->only([
+            'title',
+            'status',
+            'excerpt',
+            'content',
+            'author_id'
+        ]));
+
+        return $this->jsonResponse($entry);
+    }
+
+
+    public function destroy($id)
+    {
+        Entry::query()->delete($id);
+        return $this->jsonResponse('', '');
     }
     
 }

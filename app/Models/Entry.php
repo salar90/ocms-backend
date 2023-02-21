@@ -9,7 +9,16 @@ class Entry extends Model
 {
     use HasFactory;
 
+    
+
     protected $guarded = [];
+    protected $fillable = [
+        'title',
+        'status',
+        'excerpt',
+        'content',
+        'author_id'
+    ];
 
 
 }
