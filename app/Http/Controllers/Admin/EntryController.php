@@ -28,7 +28,7 @@ class EntryController extends Controller
             'excerpt' => '',
             'content' => 'required',
             'author_id' => 'in:users,id',
-            'tags' => 'array,rule:in(tags,id)',
+            'tags' => 'array,in(tags,id)',
         ]);
         
         $data = request()->only([
@@ -45,9 +45,7 @@ class EntryController extends Controller
             $entry->tags()->attach(request()->input('tags'));
         }
         
-        
         return $this->jsonResponse($entry);
-
     }
 
     public function update(Entry $entry)
@@ -58,7 +56,7 @@ class EntryController extends Controller
             'excerpt' => '',
             'content' => 'required',
             'author_id' => 'in:users,id',
-            'tags' => 'array,rule:in(tags,id)'
+            'tags' => 'array,in(tags,id)'
         ]);
         
         $entry->update(request()->only([
@@ -79,8 +77,11 @@ class EntryController extends Controller
 
     public function destroy($id)
     {
-        Entry::query()->delete($id);
-        return $this->jsonResponse('', '');
+        $entry = Entry::query()->findOrFail($id);
+        $entry->delete();
+        return $this->jsonResponse([
+            $entry->only(['id', 'title'])
+        ], '');
     }
     
 }
