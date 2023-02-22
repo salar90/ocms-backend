@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\EntryController;
 use App\Http\Controllers\Admin\TagTypeController;
+use App\Http\Controllers\Admin\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

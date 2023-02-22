@@ -18,11 +18,11 @@ class TagController extends Controller
         $filters = $request->input('filters');
         $query = Tag::query();
         
-        if($filters['search']){
+        if($filters['search'] ?? null){
             $query->where('name', 'like', '%' . $filters['search'] . '%');
         }
 
-        if($filters['type']){
+        if($filters['type'] ?? null){
             $query->whereIn('tagType', (array)$filters['type']);
         }
 
@@ -51,7 +51,6 @@ class TagController extends Controller
         $request->validate([
             'title' => 'required|string',
             'content' => 'sometimes',
-            'tag_type_id' => ['required', Rule::in(TagType::all()->pluck('id'))],
         ]);
 
         $tag->update($request->only(['title', 'content']));

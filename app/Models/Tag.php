@@ -18,6 +18,7 @@ class Tag extends Model
         Status::Published,
     ];
     
+    protected $guarded = [];
 
 
     public function tagType()
