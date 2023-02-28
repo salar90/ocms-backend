@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\TagTypeController as AdminTagTypeController;
 use App\Http\Controllers\Admin\TagController as AdminTagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\AuthController;
+
+use App\Http\Controllers\Client\EntryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +27,11 @@ Route::controller(AuthController::class)->group(function(){
     Route::post('/auth/register', 'register');
 });
 
-Route::middleware('auth:sanctum')->group([], function(){
+Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::resource('entries', EntryController::class)->only(['index', 'show']);
 });
 
 
@@ -41,6 +44,8 @@ Route::group([
     Route::apiResource('tag-types', AdminTagTypeController::class);
     Route::apiResource('tags', AdminTagController::class);
 });
+
+
 
 
 
