@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -45,7 +45,12 @@ class AuthController extends Controller
         if($success)
         {
             $user = Auth::user();
-            return $this->jsonResponse($user->toArray());
+            $token = $user->createToken('api')->plainTextToken;
+
+            return $this->jsonResponse([
+                'user' => $user->only(['name', 'email']),
+                'token' => $token
+            ]);
         }else{
             return $this->jsonResponse([], 'invalid credentials', 401);
         }
