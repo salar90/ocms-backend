@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\TagTypeController as AdminTagTypeController;
 use App\Http\Controllers\Admin\TagController as AdminTagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +18,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::controller(AuthController::class)->group(function(){
+    Route::post('/auth/login', 'login');
+    Route::post('/auth/logout', 'logout');
+    Route::post('/auth/register', 'register');
+});
+
 Route::middleware('auth:sanctum')->group([], function(){
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-
-    
 });
 
 
