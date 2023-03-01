@@ -26,14 +26,9 @@ Route::controller(AuthController::class)->group(function(){
     Route::post('/auth/logout', 'logout');
     Route::post('/auth/register', 'register');
 });
+;
 
-Route::middleware('auth:sanctum')->group(function(){
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-    Route::resource('entries', EntryController::class)->only(['index', 'show']);
-});
-
+Route::resource('entries', EntryController::class)->only(['index', 'show']);
 
 Route::group([
     'prefix' => 'admin',
