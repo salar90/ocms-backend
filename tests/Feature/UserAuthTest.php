@@ -45,8 +45,10 @@ class UserAuthTest extends TestCase
         
         $response->assertJson([
             'data' => [
-                'name' => $data['name'],
-                'email' => $data['email'],
+                'user' => [
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                ]
             ]
         ]);
 
