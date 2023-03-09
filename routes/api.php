@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\EntryController as AdminEntryController;
 use App\Http\Controllers\Admin\TagTypeController as AdminTagTypeController;
 use App\Http\Controllers\Admin\TagController as AdminTagController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -38,6 +39,9 @@ Route::group([
     Route::apiResource('entries', AdminEntryController::class);
     Route::apiResource('tag-types', AdminTagTypeController::class);
     Route::apiResource('tags', AdminTagController::class);
+
+    Route::get('profile/show', [AdminProfileController::class, 'show']);
+
 });
 
 
